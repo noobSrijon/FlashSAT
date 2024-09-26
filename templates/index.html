@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcard System</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-8">
+        <h1 class="text-4xl font-extrabold text-center mb-6 text-blue-600">SAT Vocabulary Flashcards</h1>
+        <div class="text-center mb-4">
+            <a href="/practice" class="btn border-t-neutral-900 bg-blue-500 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-blue-600">Practice Vocab →</a>
+        </div>
+    
+      
+        <div class="text-center mb-8">
+            <label for="filter" class="block text-gray-700 text-lg font-medium">Filter words starting with:</label>
+            <input type="text" id="filter" oninput="filterCards()" class="w-full md:w-1/2 p-3 border border-gray-300 rounded-lg mt-2 focus:outline-none focus:ring focus:ring-blue-300" placeholder="Type a character...">
+        </div>
+
+      
+        <div id="flashcards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for card in vocab_list %}
+            <div class="flip-card" onclick="flipCard(this)" data-word="{{ card.word }}">
+                <div class="flip-card-inner">
+                    
+                    <div class="flip-card-front">
+                        <h2 class="text-2xl font-bold text-blue-700">{{ card.word }}</h2>
+                    </div>
+                   
+                    <div class="flip-card-back">
+                        <p class="text-gray-600 text-lg">{{ card.definition }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+      
+        <div class="mt-8">
+            <form action="/add" method="POST" class="bg-white p-6 shadow-md rounded-lg">
+                <h2 class="text-2xl font-bold mb-4 text-gray-700">Add New Flashcard</h2>
+                <div class="mb-4">
+                    <label for="word" class="block text-gray-700">Word</label>
+                    <input type="text" id="word" name="word" class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-300" required>
+                </div>
+                <div class="mb-4">
+                    <label for="definition" class="block text-gray-700">Definition</label>
+                    <textarea id="definition" name="definition" class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-300" required></textarea>
+                </div>
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200">Add Flashcard</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        function flipCard(cardElement) {
+            cardElement.classList.toggle('flipped');
+        }
+
+        function filterCards() {
+            const filterValue = document.getElementById('filter').value.toLowerCase();
+            const cards = document.querySelectorAll('.flip-card');
+
+            cards.forEach(card => {
+                const word = card.getAttribute('data-word').toLowerCase();
+                if (word.startsWith(filterValue)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none'; 
+                }
+            });
+        }
+    </script>
+</body>
+</html>

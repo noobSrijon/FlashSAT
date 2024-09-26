@@ -1,0 +1,99 @@
+.flip-card {
+    background-color: transparent;
+    width: 100%;
+    height: 200px;
+    perspective: 1000px;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.flip-card.flipped .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    background-color: white;
+    padding: 20px;
+}
+
+.flip-card-back {
+    background-color: #f1f1f1;
+    transform: rotateY(180deg);
+}
+body {
+    background-color: #f9fafb;
+}
+.btn {
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.btn:hover {
+    background-color: #3b82f6; 
+    transform: translateY(-2px);
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.option {
+    cursor: pointer;
+    padding: 15px;
+    background-color: #edf2f7;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+}
+
+.option:hover {
+    background-color: #cbd5e0; 
+}
+
+.option.correct {
+    background-color: #48bb78; 
+    color: white;
+}
+
+.option.incorrect {
+    background-color: #f56565; 
+    color: white;
+}
+
+.result {
+    display: none;
+    text-align: center;
+}
+
+.show {
+    display: block;
+}
+.options-container {
+    background-color: #f7fafc; 
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); 
+}
